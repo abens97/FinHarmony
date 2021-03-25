@@ -17,3 +17,5 @@ Work organization / Expected deliverables
 ▪ Week 10: POC
 ▪ End of project (week 14): Launch
 Person in charge : Vincent Drouillard – partner at Finharmony
+
+https://www.gleif.org/en/about/governance/annual-report 
