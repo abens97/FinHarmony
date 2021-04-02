@@ -196,7 +196,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return render_template("converter.html", message= "BBBBBBBienvenue sur la page du convertisseur XBRL-CSV de FinHarmony, codée par 3 génies français")
+    return render_template("converter.html", message= "test")
 
 if __name__ == "__main__":
     app.run()
