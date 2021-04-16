@@ -232,7 +232,11 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
+<<<<<<< Updated upstream:.ipynb_checkpoints/Converter_xbrl-checkpoint.ipynb
    "version": "3.8.5"
+=======
+   "version": "3.8.3"
+>>>>>>> Stashed changes:Converter_xbrl.ipynb
   }
  },
  "nbformat": 4,
