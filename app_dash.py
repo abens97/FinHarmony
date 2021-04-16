@@ -129,7 +129,7 @@ def update_output(uploaded_filenames, uploaded_file_contents):
     
     csv_files = uploaded_files(CSV_DIRECTORY) 
     if len(csv_files) == 0:
-        csv_list = [html.Li("Aucun fichier n'a encore été chargé")]
+        csv_list = [html.Li("Aucun rapport n'a encore été chargé")]
     else :
         csv_list = [html.Li(file_download_link(filename)) for filename in csv_files]
     
