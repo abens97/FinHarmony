@@ -10,7 +10,8 @@ from bs4 import BeautifulSoup as BS
 import glob
 import os
 from flask import Flask, render_template
-
+import pandas as pd
+import csv
 # August 2020
 # Parse iXBRL reports, published as .html or .xhtml file from local
 # Minimal example: Use of imports is kept to an absolute minimum 
@@ -191,7 +192,25 @@ def convertir(mycsvpath, file_name, file_path):
     
             
             # Write to csv file
-            outFile.write(str(position) +";"+ tag +";"+ tagtype +";"+ str(numcontent) +";"+ unit +";"+date3 + ";"  +identi +";"+dim +";"+form +"\n")
+            outFile.write(str(position) +";"+ tag +";"+ tagtype +";"+ str(numcontent) +";"+ unit +";"+date3 + ";"  +identi +";"+ dim +";"+form +"\n")
     
     outFile.close()
-
+    
+    
+def convertir_V2(mycsvpath, file_name, file_path):
+    
+    file_name_parsed = file_name.split(".")[0 : -1] 
+    file_label = '.'.join(file_name_parsed)
+    print(file_name)
+    dataframe_list = pd.read_html(io = file_path+"/"+str(file_name))
+    # Create a Pandas Excel writer using XlsxWriter as the engine.
+    writer = pd.ExcelWriter(mycsvpath+"/"+file_label+'.xlsx', engine='xlsxwriter')
+    #writer = csv.writer(mycsvpath+"/"+file_label+'.csv', delimiter=';')
+    for i in range (len(dataframe_list)) :
+        print(i+1)
+        dataframe_list[i].to_excel(writer, sheet_name=str(i+1))
+    
+    # Close the Pandas Excel writer and output the Excel file.
+    writer.save()
+    
+    

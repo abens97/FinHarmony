@@ -13,6 +13,8 @@ import dash_bootstrap_components as dbc
 
 
 #https://docs.faculty.ai/user-guide/apps/examples/dash_file_upload_download.html
+#https://www.safran-group.com/urd2021/reports/index.html
+
 # Normally, Dash creates its own Flask server internally. By creating our own,
 # we can create a route for downloading files directly:
 server = Flask(__name__)
@@ -104,7 +106,9 @@ def uploaded_files(URL):
 
 def file_download_link(filename):
     """Create a Plotly Dash 'A' element that downloads a file from the app."""
-    location = "/download/{}".format(urlquote(filename))
+    #location = "/download/{}".format(urlquote(filename)
+ 
+    location = CSV_DIRECTORY + "/"+filename
     return html.A(filename, href=location)
 
 
@@ -124,7 +128,8 @@ def update_output(uploaded_filenames, uploaded_file_contents):
     
     xbrl_files = uploaded_files(XBRL_DIRECTORY)
     for i in xbrl_files :
-        convert.convertir(CSV_DIRECTORY, i, XBRL_DIRECTORY)
+        convert.convertir_V2(CSV_DIRECTORY, i, XBRL_DIRECTORY)
+        print(str(i))
         print('Fichier converti')
     
     csv_files = uploaded_files(CSV_DIRECTORY) 
@@ -136,6 +141,8 @@ def update_output(uploaded_filenames, uploaded_file_contents):
     execution_time_sentence = "Le traitement a duré : " + str(time.process_time() - start) + " secondes."
     
     return csv_list, execution_time_sentence
+
+
 
 if __name__ == "__main__":
     app.run_server(debug=True, port=8080)

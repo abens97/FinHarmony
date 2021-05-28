@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta charset="UTF-8">
+        <title>Dash</title>
+        <link rel="icon" type="image/x-icon" href="/_favicon.ico?v=1.20.0">
+        
+    </head>
+    <body>
+        
+<div id="react-entry-point">
+    <div class="_dash-loading">
+        Loading...
+    </div>
+</div>
+
+        <footer>
+            <script id="_dash-config" type="application/json">{"url_base_pathname": null, "requests_pathname_prefix": "/", "ui": true, "props_check": true, "show_undo_redo": false, "suppress_callback_exceptions": false, "update_title": "Updating...", "hot_reload": {"interval": 3000, "max_retry": 8}}</script>
+            <script src="/_dash-component-suites/dash_renderer/polyfill@7.v1_9_1m1617983299.8.7.min.js"></script>
+<script src="/_dash-component-suites/dash_renderer/react@16.v1_9_1m1617983299.14.0.js"></script>
+<script src="/_dash-component-suites/dash_renderer/react-dom@16.v1_9_1m1617983299.14.0.js"></script>
+<script src="/_dash-component-suites/dash_renderer/prop-types@15.v1_9_1m1617983299.7.2.js"></script>
+<script src="/_dash-component-suites/dash_bootstrap_components/_components/dash_bootstrap_components.v0_12_0m1618483273.min.js"></script>
+<script src="/_dash-component-suites/dash_core_components/dash_core_components.v1_16_0m1617983299.min.js"></script>
+<script src="/_dash-component-suites/dash_core_components/dash_core_components-shared.v1_16_0m1617983299.js"></script>
+<script src="/_dash-component-suites/dash_html_components/dash_html_components.v1_1_3m1617983299.min.js"></script>
+<script src="/_dash-component-suites/dash_renderer/dash_renderer.v1_9_1m1617983299.dev.js"></script>
+            <script id="_dash-renderer" type="application/javascript">var renderer = new DashRenderer();</script>
+        </footer>
+    </body>
+</html>
