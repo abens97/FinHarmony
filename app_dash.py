@@ -1,7 +1,7 @@
 import base64
 import os, shutil
 from urllib.parse import quote as urlquote
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, current_app
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -10,6 +10,7 @@ import glob
 import convert
 import time
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
 
 
 #https://docs.faculty.ai/user-guide/apps/examples/dash_file_upload_download.html
@@ -17,7 +18,7 @@ import dash_bootstrap_components as dbc
 
 # Normally, Dash creates its own Flask server internally. By creating our own,
 # we can create a route for downloading files directly:
-server = Flask(__name__)
+server = Flask(__name__, static_url_path='')
 app = dash.Dash(server=server)
 
 current_path = os.getcwd()
@@ -25,6 +26,11 @@ current_path = os.getcwd()
 vert = '#009081'
 XBRL_DIRECTORY = os.path.join(current_path, 'Entrees_XBRL')
 CSV_DIRECTORY = os.path.join(current_path, 'Sorties_CSV')
+
+UPLOAD_DIRECTORY = " "
+
+if not os.path.exists(UPLOAD_DIRECTORY):
+    os.makedirs(UPLOAD_DIRECTORY)
 
 #Vider CSV_DIRECTORY et XBRL_DIRECTORY
 def clean_folder(folder) : 
@@ -41,10 +47,11 @@ def clean_folder(folder) :
 clean_folder(XBRL_DIRECTORY)
 clean_folder(CSV_DIRECTORY)
 
-@server.route("/download/<path:path>")
-def download(path):
+@server.route('/download/<path:filename>')
+def download(filename):
     """Serve a file from the upload directory."""
-    return send_from_directory(XBRL_DIRECTORY, path, as_attachment=True)
+    uploads = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'])
+    return send_from_directory(uploads, filename, as_attachment=True)
 
 
 app.layout = dbc.Container(
@@ -82,9 +89,12 @@ app.layout = dbc.Container(
         html.H4("Fichiers à télécharger :"),
         dcc.Loading(children=[html.Ul(id="file-list")]),
         html.Div(id="time-indic"),
+        
     ], 
     fluid=True
 )
+
+
 
 
 def save_file(name, content):
@@ -106,10 +116,16 @@ def uploaded_files(URL):
 
 def file_download_link(filename):
     """Create a Plotly Dash 'A' element that downloads a file from the app."""
-    #location = "/download/{}".format(urlquote(filename)
- 
-    location = CSV_DIRECTORY + "/"+filename
+    #location = "/{}".format(urlquote(filename))
+    location = CSV_DIRECTORY + "/" + filename
+    print("location : " + filename)
+    print('')
+    print(location)
+    #download("/{}")
+   
     return html.A(filename, href=location)
+
+
 
 
 @app.callback(
@@ -133,9 +149,14 @@ def update_output(uploaded_filenames, uploaded_file_contents):
         print('Fichier converti')
     
     csv_files = uploaded_files(CSV_DIRECTORY) 
+    
+    
     if len(csv_files) == 0:
         csv_list = [html.Li("Aucun rapport n'a encore été chargé")]
     else :
+        print("checker : ")
+        print('')
+        print(type(csv_files[0]))
         csv_list = [html.Li(file_download_link(filename)) for filename in csv_files]
     
     execution_time_sentence = "Le traitement a duré : " + str(time.process_time() - start) + " secondes."

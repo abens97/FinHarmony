@@ -203,12 +203,14 @@ def convertir_V2(mycsvpath, file_name, file_path):
     file_label = '.'.join(file_name_parsed)
     print(file_name)
     dataframe_list = pd.read_html(io = file_path+"/"+str(file_name))
+    dataframe_list_filtered = [i for i in dataframe_list if len(i) > 2]
+    
     # Create a Pandas Excel writer using XlsxWriter as the engine.
     writer = pd.ExcelWriter(mycsvpath+"/"+file_label+'.xlsx', engine='xlsxwriter')
     #writer = csv.writer(mycsvpath+"/"+file_label+'.csv', delimiter=';')
-    for i in range (len(dataframe_list)) :
+    for i in range (len(dataframe_list_filtered)) :
         print(i+1)
-        dataframe_list[i].to_excel(writer, sheet_name=str(i+1))
+        dataframe_list_filtered[i].to_excel(writer, sheet_name=str(i+1))
     
     # Close the Pandas Excel writer and output the Excel file.
     writer.save()
