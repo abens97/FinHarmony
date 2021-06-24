@@ -1,7 +1,7 @@
 import base64
 import os, shutil
 from urllib.parse import quote as urlquote
-from flask import Flask, send_from_directory, current_app
+from flask import Flask, send_from_directory, current_app, make_response, request
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -27,7 +27,7 @@ vert = '#009081'
 XBRL_DIRECTORY = os.path.join(current_path, 'Entrees_XBRL')
 CSV_DIRECTORY = os.path.join(current_path, 'Sorties_CSV')
 
-UPLOAD_DIRECTORY = " "
+UPLOAD_DIRECTORY = "\Projet de fin de parcours2\FinHarmony"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
@@ -90,11 +90,13 @@ app.layout = dbc.Container(
         dcc.Loading(children=[html.Ul(id="file-list")]),
         html.Div(id="time-indic"),
         
+     
+      
+        
+        
     ], 
     fluid=True
 )
-
-
 
 
 def save_file(name, content):
@@ -117,13 +119,16 @@ def uploaded_files(URL):
 def file_download_link(filename):
     """Create a Plotly Dash 'A' element that downloads a file from the app."""
     #location = "/{}".format(urlquote(filename))
-    location = CSV_DIRECTORY + "/" + filename
+    location = "file://" +CSV_DIRECTORY + "/" + filename
     print("location : " + filename)
     print('')
     print(location)
     #download("/{}")
    
-    return html.A(filename, href=location)
+    return html.A('téléchargez votre fichier converti', id='filename', download=filename,
+            href= location,
+            target="_blank")
+        
 
 
 
@@ -159,6 +164,7 @@ def update_output(uploaded_filenames, uploaded_file_contents):
         print(type(csv_files[0]))
         csv_list = [html.Li(file_download_link(filename)) for filename in csv_files]
     
+      
     execution_time_sentence = "Le traitement a duré : " + str(time.process_time() - start) + " secondes."
     
     return csv_list, execution_time_sentence

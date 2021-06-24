@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
 import re
 import pathlib
 from bs4 import BeautifulSoup as BS  
@@ -214,5 +208,4 @@ def convertir_V2(mycsvpath, file_name, file_path):
     
     # Close the Pandas Excel writer and output the Excel file.
     writer.save()
-    
     
